@@ -9,7 +9,7 @@ import { client, e } from "app/db.server";
 
 // START SEEDS
 async function seed() {
- 
+
   console.log(`Database has been seeded. 🌱`);
 }
 
