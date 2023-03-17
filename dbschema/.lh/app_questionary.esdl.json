@@ -1,0 +1,94 @@
+{
+    "sourceFile": "app_questionary.esdl",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 19,
+            "patches": [
+                {
+                    "date": 1677028499472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1677028555574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n module default {\n \n     type Snapshot {\n+     \n       required property created_at -> datetime {\n         default := datetime_current();\n       };\n       required link answer -> Answer;\n"
+                },
+                {
+                    "date": 1677028594919,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,12 @@\n module default {\n \n     type Snapshot {\n      \n-      required property created_at -> datetime {\n-        default := datetime_current();\n-      };\n+      required property created_at -> datetime { default := datetime_current(); };\n+      property updated_at -> datetime;\n+\n+    \n       required link answer -> Answer;\n       required property score -> int64;\n     }\n \n"
+                },
+                {
+                    "date": 1677028805665,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,15 +4,15 @@\n      \n       required property created_at -> datetime { default := datetime_current(); };\n       property updated_at -> datetime;\n \n-    \n       required link answer -> Answer;\n       required property score -> int64;\n     }\n \n     type Question {\n       required property title -> str;\n+      \n       multi link answers -> Answer;\n     }\n \n     type Answer {\n"
+                },
+                {
+                    "date": 1677029111065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n     type Question {\n       required property title -> str;\n       \n       multi link answers -> Answer;\n+      multi link answers := .<answer[is Answer];\n     }\n \n     type Answer {\n       required property score -> int64;\n"
+                },
+                {
+                    "date": 1677029135914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,17 +11,16 @@\n \n     type Question {\n       required property title -> str;\n       \n-      multi link answers -> Answer;\n       multi link answers := .<answer[is Answer];\n     }\n \n     type Answer {\n       required property score -> int64;\n       required property locale -> str;\n \n-      multi link snapshots -> Snapshot;\n+      multi link snapshots := .<snapot[is Snapshot];\n       link user -> User;\n       link question -> Question;\n     }\n \n"
+                },
+                {
+                    "date": 1677029184906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,13 @@\n     type Answer {\n       required property score -> int64;\n       required property locale -> str;\n \n+\n+       required link answer -> Answer {\n+         on target delete delete source;\n+        };\n+\n       multi link snapshots := .<snapot[is Snapshot];\n       link user -> User;\n       link question -> Question;\n     }\n"
+                },
+                {
+                    "date": 1677029191487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n        required link answer -> Answer {\n          on target delete delete source;\n         };\n \n-      multi link snapshots := .<snapot[is Snapshot];\n+      multi link snapshots := .<snapshot[is Snapshot];\n       link user -> User;\n       link question -> Question;\n     }\n \n"
+                },
+                {
+                    "date": 1677029223747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,13 +18,8 @@\n     type Answer {\n       required property score -> int64;\n       required property locale -> str;\n \n-\n-       required link answer -> Answer {\n-         on target delete delete source;\n-        };\n-\n       multi link snapshots := .<snapshot[is Snapshot];\n       link user -> User;\n       link question -> Question;\n     }\n"
+                },
+                {
+                    "date": 1677029292408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n     type Question {\n       required property title -> str;\n       \n       multi link answers := .<answer[is Answer];\n+      \n     }\n \n     type Answer {\n       required property score -> int64;\n"
+                },
+                {
+                    "date": 1677029313976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,12 @@\n     type Answer {\n       required property score -> int64;\n       required property locale -> str;\n \n+      required link answer -> Answer {\n+         on target delete delete source;\n+        };\n+\n       multi link snapshots := .<snapshot[is Snapshot];\n       link user -> User;\n       link question -> Question;\n     }\n"
+                },
+                {
+                    "date": 1677064632597,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,12 +19,8 @@\n     type Answer {\n       required property score -> int64;\n       required property locale -> str;\n \n-      required link answer -> Answer {\n-         on target delete delete source;\n-        };\n-\n       multi link snapshots := .<snapshot[is Snapshot];\n       link user -> User;\n       link question -> Question;\n     }\n"
+                },
+                {
+                    "date": 1677064671468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,16 +12,14 @@\n     type Question {\n       required property title -> str;\n       \n       multi link answers := .<answer[is Answer];\n-      \n     }\n \n     type Answer {\n       required property score -> int64;\n       required property locale -> str;\n \n-      multi link snapshots := .<snapshot[is Snapshot];\n       link user -> User;\n       link question -> Question;\n     }\n \n"
+                },
+                {
+                    "date": 1677064718938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,20 +8,22 @@\n       required link answer -> Answer;\n       required property score -> int64;\n     }\n \n-    type Question {\n-      required property title -> str;\n-      \n-      multi link answers := .<answer[is Answer];\n-    }\n-\n     type Answer {\n       required property score -> int64;\n       required property locale -> str;\n \n       link user -> User;\n       link question -> Question;\n     }\n+    \n+    type Question {\n+      required property title -> str;\n+      \n+      multi link answers := .<answer[is Answer];\n+    }\n \n+\n+\n }\n \n"
+                },
+                {
+                    "date": 1677064782820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,15 +15,15 @@\n \n       link user -> User;\n       link question -> Question;\n     }\n-    \n+\n     type Question {\n       required property title -> str;\n       \n-      multi link answers := .<answer[is Answer];\n+      multi link answers := .<question[is Answer].answer;\n+\n     }\n \n \n-\n }\n \n"
+                },
+                {
+                    "date": 1677064873729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,11 +18,9 @@\n     }\n \n     type Question {\n       required property title -> str;\n-      \n-      multi link answers := .<question[is Answer].answer;\n-\n+      multi link answers -> Answer;\n     }\n \n \n }\n"
+                },
+                {
+                    "date": 1677064894000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,8 @@\n     type Snapshot {\n      \n       required property created_at -> datetime { default := datetime_current(); };\n       property updated_at -> datetime;\n-\n-      required link answer -> Answer;\n       required property score -> int64;\n     }\n \n     type Answer {\n"
+                },
+                {
+                    "date": 1677064908916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n     type Snapshot {\n      \n       required property created_at -> datetime { default := datetime_current(); };\n       property updated_at -> datetime;\n+      \n       required property score -> int64;\n     }\n \n     type Answer {\n"
+                },
+                {
+                    "date": 1677064914684,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,10 @@\n module default {\n \n     type Snapshot {\n-     \n       required property created_at -> datetime { default := datetime_current(); };\n       property updated_at -> datetime;\n-      \n+\n       required property score -> int64;\n     }\n \n     type Answer {\n"
+                },
+                {
+                    "date": 1677064990407,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,6 @@\n module default {\n \n-    type Snapshot {\n-      required property created_at -> datetime { default := datetime_current(); };\n-      property updated_at -> datetime;\n-\n-      required property score -> int64;\n-    }\n-\n     type Answer {\n       required property score -> int64;\n       required property locale -> str;\n \n@@ -19,7 +12,5 @@\n       required property title -> str;\n       multi link answers -> Answer;\n     }\n \n-\n-}\n-\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1677028499472,
+            "name": "Commit-0",
+            "content": "module default {\n\n    type Snapshot {\n      required property created_at -> datetime {\n        default := datetime_current();\n      };\n      required link answer -> Answer;\n      required property score -> int64;\n    }\n\n    type Question {\n      required property title -> str;\n      multi link answers -> Answer;\n    }\n\n    type Answer {\n      required property score -> int64;\n      required property locale -> str;\n\n      multi link snapshots -> Snapshot;\n      link user -> User;\n      link question -> Question;\n    }\n\n}\n\n"
+        }
+    ]
+}

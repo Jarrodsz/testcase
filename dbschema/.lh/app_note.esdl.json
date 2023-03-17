@@ -1,0 +1,38 @@
+{
+    "sourceFile": "app_note.esdl",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1676994047880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1676994182277,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,5 @@\n module default {\n \n-   type Note {\n-        required property title -> str;\n-        required property body -> str;\n-        required property created_at -> datetime {\n-          default := datetime_current();\n-        };\n-        property updated_at -> datetime;\n+   \n \n-        required link user -> core::User {\n-         on target delete delete source;\n-        };\n-    }\n-\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1677028446898,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,17 @@\n module default {\n \n-   \n+    type Note {\n+        required property title -> str;\n\\ No newline at end of file\n+        required property body -> str;\n+        required property created_at -> datetime {\n+          default := datetime_current();\n+        };\n+        property updated_at -> datetime;\n \n-}\n+        required link user -> User {\n+         on target delete delete source;\n+        };\n+    }\n+\n+}\n+\n"
+                },
+                {
+                    "date": 1677028543388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,16 @@\n module default {\n \n     type Note {\n+\n+        property updated_at -> datetime;\n+        \n         required property title -> str;\n         required property body -> str;\n         required property created_at -> datetime {\n           default := datetime_current();\n         };\n-        property updated_at -> datetime;\n+      \n \n         required link user -> User {\n          on target delete delete source;\n         };\n"
+                },
+                {
+                    "date": 1677028563318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,16 @@\n module default {\n \n     type Note {\n \n+        required property created_at -> datetime {\n+          default := datetime_current();\n+        };\n         property updated_at -> datetime;\n         \n         required property title -> str;\n         required property body -> str;\n-        required property created_at -> datetime {\n-          default := datetime_current();\n-        };\n       \n-\n         required link user -> User {\n          on target delete delete source;\n         };\n     }\n"
+                },
+                {
+                    "date": 1677028570346,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,9 @@\n module default {\n \n     type Note {\n \n-        required property created_at -> datetime {\n-          default := datetime_current();\n-        };\n+        required property created_at -> datetime { default := datetime_current(); };\n         property updated_at -> datetime;\n         \n         required property title -> str;\n         required property body -> str;\n"
+                }
+            ],
+            "date": 1676994047880,
+            "name": "Commit-0",
+            "content": "module default {\n\n   type Note {\n        required property title -> str;\n        required property body -> str;\n        required property created_at -> datetime {\n          default := datetime_current();\n        };\n        property updated_at -> datetime;\n\n        required link user -> core::User {\n         on target delete delete source;\n        };\n    }\n\n}"
+        }
+    ]
+}

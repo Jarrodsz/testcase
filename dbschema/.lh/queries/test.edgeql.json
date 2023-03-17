@@ -1,0 +1,38 @@
+{
+    "sourceFile": "queries/test.edgeql",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1675684800607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1675684808714,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n insert Movie {\n  title := 'Dune'\n- release_year = 2021,\n+ release_year := 2021,\n  director := (\n     insert Person {\n     name := \"test\"\n     }\n+\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1675684896906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,7 @@\n-insert Movie {\n- title := 'Dune'\n- release_year := 2021,\n- director := (\n-    insert Person {\n-    name := \"test\"\n+insert User {\n+    profile := (\n+        insert UserProfile {\n+        first_name := \"test\"\n+        last_name := \"test\"\n     }\n-\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1675684948761,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n insert User {\n+    hash = \"password\"\n     profile := (\n         insert UserProfile {\n         first_name := \"test\"\n         last_name := \"test\"\n"
+                },
+                {
+                    "date": 1675684966710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n insert User {\n-    hash = \"password\"\n+    hash := \"password\"\n     profile := (\n-        insert UserProfile {\n+        insert UserProfile \n         first_name := \"test\"\n         last_name := \"test\"\n-    }\n+    )\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1675684980210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n insert User {\n     hash := \"password\"\n     profile := (\n-        insert UserProfile \n-        first_name := \"test\"\n-        last_name := \"test\"\n+        insert UserProfile {\n+            first_name := \"test\"\n+            last_name := \"test\"\n+        }\n     )\n }\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1675684800607,
+            "name": "Commit-0",
+            "content": "insert Movie {\n title := 'Dune'\n release_year = 2021,\n director := (\n    insert Person {\n    name := \"test\"\n    }\n}"
+        }
+    ]
+}

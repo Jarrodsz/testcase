@@ -1,0 +1,74 @@
+{
+    "sourceFile": "core_user.esdl",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1677028295025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1677028338283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,8 @@\n       # APP LINKS\n       multi link notes := .<user[is Note];\n \n       multi link answers := .<user[is Note];\n-      multi link answers -> Answer;\n \n \n     }\n \n"
+                },
+                {
+                    "date": 1677028347814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,12 +21,9 @@\n       }\n \n       # APP LINKS\n       multi link notes := .<user[is Note];\n-\n-      multi link answers := .<user[is Note];\n-\n-\n+      multi link answers -> Answer;\n     }\n \n     type UserPassword {\n       required property hash -> str;\n@@ -48,6 +45,5 @@\n       IF EXISTS .last_name\n       ELSE .first_name;\n   }\n \n-\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1677028385936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,8 @@\n       # CORE LINKS\n       required link password -> UserPassword;\n       required link profile -> UserProfile;\n       required link organisation -> Organisation;\n-\n       multi link organisations -> Organisation {\n        property role -> str;\n        property invite_code -> str;\n        property invite_status -> bool;\n"
+                },
+                {
+                    "date": 1677028391359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,10 @@\n \n       # APP LINKS\n       multi link notes := .<user[is Note];\n       multi link answers -> Answer;\n+\n+      \n     }\n \n     type UserPassword {\n       required property hash -> str;\n"
+                },
+                {
+                    "date": 1677028693193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,12 @@\n module default {\n \n   type User {\n-      required property created_at -> datetime {\n-        default := datetime_current();\n-      }\n-      required property email -> str {\n-        constraint exclusive;\n-      }\n+    \n+      required property created_at -> datetime { default := datetime_current(); };\n+      property updated_at -> datetime;\n+\n+      required property email -> str { constraint exclusive; }\n       property onboarded -> bool;\n \n       # CORE LINKS\n       required link password -> UserPassword;\n@@ -22,9 +21,9 @@\n       # APP LINKS\n       multi link notes := .<user[is Note];\n       multi link answers -> Answer;\n \n-      \n+\n     }\n \n     type UserPassword {\n       required property hash -> str;\n"
+                },
+                {
+                    "date": 1677028703993,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,16 +28,16 @@\n     type UserPassword {\n       required property hash -> str;\n     }\n \n-    type LoginAttempt {\n+  type LoginAttempt {\n       required property ip_address -> str;\n       required property login_successful -> bool;\n       required property attempted_at -> datetime;\n       required link user -> User {\n         on target delete delete source;\n       };\n-    }\n+  }\n \n   type UserProfile {\n       property first_name -> str;\n       property last_name -> str;\n"
+                },
+                {
+                    "date": 1677028712545,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,13 +22,13 @@\n       multi link notes := .<user[is Note];\n       multi link answers -> Answer;\n \n \n-    }\n+  }\n \n-    type UserPassword {\n+  type UserPassword {\n       required property hash -> str;\n-    }\n+  }\n \n   type LoginAttempt {\n       required property ip_address -> str;\n       required property login_successful -> bool;\n"
+                },
+                {
+                    "date": 1677028767235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n       }\n \n       # APP LINKS\n       multi link notes := .<user[is Note];\n-      multi link answers -> Answer;\n+      multi link snapshots := .<user[is Note];\n \n \n   }\n \n"
+                },
+                {
+                    "date": 1677028788848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,8 @@\n       }\n \n       # APP LINKS\n       multi link notes := .<user[is Note];\n-      multi link snapshots := .<user[is Note];\n \n \n   }\n \n"
+                },
+                {
+                    "date": 1677028837364,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,9 @@\n       }\n \n       # APP LINKS\n       multi link notes := .<user[is Note];\n-\n-\n+      \n   }\n \n   type UserPassword {\n       required property hash -> str;\n"
+                },
+                {
+                    "date": 1677064651738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,11 @@\n       }\n \n       # APP LINKS\n       multi link notes := .<user[is Note];\n-      \n+      multi link snapshots := .<snapshot[is Snapshot];\n+\n+\n   }\n \n   type UserPassword {\n       required property hash -> str;\n"
+                },
+                {
+                    "date": 1677065001362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,8 @@\n       }\n \n       # APP LINKS\n       multi link notes := .<user[is Note];\n-      multi link snapshots := .<snapshot[is Snapshot];\n \n \n   }\n \n"
+                },
+                {
+                    "date": 1677065239531,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,12 @@\n       }\n \n       # APP LINKS\n       multi link notes := .<user[is Note];\n+      multi link answers_on_date -> Answer {\n+          property date -> datetime;\n+        };\n \n-\n   }\n \n   type UserPassword {\n       required property hash -> str;\n"
+                },
+                {
+                    "date": 1677067253524,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,8 @@\n \n       # CORE LINKS\n       required link password -> UserPassword;\n       required link profile -> UserProfile;\n-      required link organisation -> Organisation;\n       multi link organisations -> Organisation {\n        property role -> str;\n        property invite_code -> str;\n        property invite_status -> bool;\n@@ -21,9 +20,9 @@\n       # APP LINKS\n       multi link notes := .<user[is Note];\n       multi link answers_on_date -> Answer {\n           property date -> datetime;\n-        };\n+      };\n \n   }\n \n   type UserPassword {\n"
+                }
+            ],
+            "date": 1677028295025,
+            "name": "Commit-0",
+            "content": "module default {\n\n  type User {\n      required property created_at -> datetime {\n        default := datetime_current();\n      }\n      required property email -> str {\n        constraint exclusive;\n      }\n      property onboarded -> bool;\n\n      # CORE LINKS\n      required link password -> UserPassword;\n      required link profile -> UserProfile;\n      required link organisation -> Organisation;\n\n      multi link organisations -> Organisation {\n       property role -> str;\n       property invite_code -> str;\n       property invite_status -> bool;\n      }\n\n      # APP LINKS\n      multi link notes := .<user[is Note];\n\n      multi link answers := .<user[is Note];\n      multi link answers -> Answer;\n\n\n    }\n\n    type UserPassword {\n      required property hash -> str;\n    }\n\n    type LoginAttempt {\n      required property ip_address -> str;\n      required property login_successful -> bool;\n      required property attempted_at -> datetime;\n      required link user -> User {\n        on target delete delete source;\n      };\n    }\n\n  type UserProfile {\n      property first_name -> str;\n      property last_name -> str;\n      property name := .first_name ++ ' ' ++ .last_name\n      IF EXISTS .last_name\n      ELSE .first_name;\n  }\n\n\n}"
+        }
+    ]
+}

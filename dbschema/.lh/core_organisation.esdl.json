@@ -1,0 +1,18 @@
+{
+    "sourceFile": "core_organisation.esdl",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1677028656256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1677028656256,
+            "name": "Commit-0",
+            "content": "module default {\n\n  type Organisation {\n    required property created_at -> datetime { default := datetime_current(); };\n    property updated_at -> datetime;\n    \n    link subscription -> OrganisationSubscription;\n    link profile -> OrganisationProfile;\n  }\n\n  type OrganisationProfile {\n    required property name -> str;\n    required property address -> str;\n    required property addressNr -> str;\n    required property postal -> str;\n    required property city -> str;\n    #required link country -> Country;\n  }\n\n  type OrganisationSubscription {\n    property customerId -> str;\n    property subscriptionId -> str;\n    property planId -> str;\n    property status -> str;\n    property currentPeriodStart -> datetime { default := datetime_current() };\n    property currentPeriodEnd -> datetime;\n    property cancelAtPeriodEnd -> bool;\n  }\n\n}"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "app_question.esdl",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1677028463950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1677028473289,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,14 @@\n module default {\n \n+    type Snapshot {\n+      required property created_at -> datetime {\n+        default := datetime_current();\n+      };\n+      required link answer -> Answer;\n+      required property score -> int64;\n+    }\n+\n     type Question {\n       required property title -> str;\n       multi link answers -> Answer;\n     }\n@@ -13,14 +21,8 @@\n       link user -> User;\n       link question -> Question;\n     }\n \n-    type Snapshot {\n-      required property created_at -> datetime {\n-        default := datetime_current();\n-      };\n-      required link answer -> Answer;\n-      required property score -> int64;\n-    }\n \n+\n }\n \n"
+                }
+            ],
+            "date": 1677028463950,
+            "name": "Commit-0",
+            "content": "module default {\n\n    type Question {\n      required property title -> str;\n      multi link answers -> Answer;\n    }\n\n    type Answer {\n      required property score -> int64;\n      required property locale -> str;\n\n      multi link snapshots -> Snapshot;\n      link user -> User;\n      link question -> Question;\n    }\n\n    type Snapshot {\n      required property created_at -> datetime {\n        default := datetime_current();\n      };\n      required link answer -> Answer;\n      required property score -> int64;\n    }\n\n}\n\n"
+        }
+    ]
+}

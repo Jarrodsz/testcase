@@ -1,0 +1,30 @@
+{
+    "sourceFile": "app.esdl",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1676994129654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1676994167526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n       required property score -> int64;\n       required property locale -> str;\n \n       multi link snapshots -> app::Snapshot;\n-      link user -> User;\n+      link user -> core::User;\n       link question -> app::Question;\n     }\n \n     type Snapshot {\n"
+                },
+                {
+                    "date": 1676994190760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,20 @@\n module app {\n \n+\n+    type Note {\n+        required property title -> str;\n+        required property body -> str;\n+        required property created_at -> datetime {\n+          default := datetime_current();\n+        };\n+        property updated_at -> datetime;\n+\n+        required link user -> core::User {\n+         on target delete delete source;\n+        };\n+    }\n+\n     type Question {\n       required property title -> str;\n       multi link answers -> app::Answer;\n     }\n"
+                },
+                {
+                    "date": 1677028526593,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,40 +1,4 @@\n-module app {\n+module default {\n \n \n-    type Note {\n-        required property title -> str;\n-        required property body -> str;\n-        required property created_at -> datetime {\n-          default := datetime_current();\n-        };\n-        property updated_at -> datetime;\n-\n-        required link user -> core::User {\n-         on target delete delete source;\n-        };\n-    }\n-\n-    type Question {\n-      required property title -> str;\n-      multi link answers -> app::Answer;\n-    }\n-\n-    type Answer {\n-      required property score -> int64;\n-      required property locale -> str;\n-\n-      multi link snapshots -> app::Snapshot;\n-      link user -> core::User;\n-      link question -> app::Question;\n-    }\n-\n-    type Snapshot {\n-      required property created_at -> datetime {\n-        default := datetime_current();\n-      };\n-      required link answer -> app::Answer;\n-      required property score -> int64;\n-    }\n-\n }\n-\n"
+                }
+            ],
+            "date": 1676994129654,
+            "name": "Commit-0",
+            "content": "module app {\n\n    type Question {\n      required property title -> str;\n      multi link answers -> app::Answer;\n    }\n\n    type Answer {\n      required property score -> int64;\n      required property locale -> str;\n\n      multi link snapshots -> app::Snapshot;\n      link user -> User;\n      link question -> app::Question;\n    }\n\n    type Snapshot {\n      required property created_at -> datetime {\n        default := datetime_current();\n      };\n      required link answer -> app::Answer;\n      required property score -> int64;\n    }\n\n}\n\n"
+        }
+    ]
+}

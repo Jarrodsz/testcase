@@ -1,0 +1,22 @@
+{
+    "sourceFile": "core_admin.esdl",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1677028639591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1677028646482,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n module default {\n \n   type Admin {\n       required property email -> str { constraint exclusive };\n+      \n       required link password -> AdminPassword;\n       required link profile -> AdminProfile;\n   }\n \n"
+                }
+            ],
+            "date": 1677028639591,
+            "name": "Commit-0",
+            "content": "module default {\n\n  type Admin {\n      required property email -> str { constraint exclusive };\n      required link password -> AdminPassword;\n      required link profile -> AdminProfile;\n  }\n\n  type AdminProfile {\n      property first_name -> str;\n      property last_name -> str;\n      property name := .first_name ++ ' ' ++ .last_name\n      IF EXISTS .last_name\n      ELSE .first_name;\n  }\n\n  type AdminPassword {\n      required property hash -> str;\n  }\n\n}"
+        }
+    ]
+}
