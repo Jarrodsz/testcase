@@ -9,6 +9,7 @@ module default {
 
       required property question_id -> int64;
       required property title -> str;
+      required property title2 -> str;
 
       required property status -> int64;
       required property locale -> str;

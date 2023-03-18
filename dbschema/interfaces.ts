@@ -6,19 +6,19 @@ export namespace std {
   export interface BaseObject {
     "id": string;
   }
+  export interface $Object extends BaseObject {}
   export interface FreeObject extends BaseObject {}
   export type JsonEmpty = "ReturnEmpty" | "ReturnTarget" | "Error" | "UseNull" | "DeleteKey";
-  export interface $Object extends BaseObject {}
 }
 export namespace cfg {
   export interface ConfigObject extends std.BaseObject {}
   export interface AbstractConfig extends ConfigObject {
-    "auth": Auth[];
     "session_idle_timeout": edgedb.Duration;
     "session_idle_transaction_timeout": edgedb.Duration;
     "query_execution_timeout": edgedb.Duration;
     "listen_port": number;
     "listen_addresses": string[];
+    "auth": Auth[];
     "allow_dml_in_functions"?: boolean | null;
     "allow_bare_ddl"?: AllowBareDDL | null;
     "apply_access_policies"?: boolean | null;
@@ -32,9 +32,9 @@ export namespace cfg {
   }
   export type AllowBareDDL = "AlwaysAllow" | "NeverAllow";
   export interface Auth extends ConfigObject {
-    "method"?: AuthMethod | null;
     "priority": number;
     "user": string[];
+    "method"?: AuthMethod | null;
     "comment"?: string | null;
   }
   export interface AuthMethod extends ConfigObject {
@@ -51,6 +51,56 @@ export namespace cfg {
     "transports": ConnectionTransport[];
   }
   export interface Trust extends AuthMethod {}
+}
+export interface Admin extends std.$Object {
+  "password": AdminPassword;
+  "email": string;
+  "profile": AdminProfile;
+}
+export interface AdminPassword extends std.$Object {
+  "hash": string;
+}
+export interface AdminProfile extends std.$Object {
+  "first_name"?: string | null;
+  "last_name"?: string | null;
+  "name"?: string | null;
+}
+export interface Answer extends std.$Object {
+  "answer_id": number;
+  "locale": string;
+  "score": number;
+  "title": string;
+  "question"?: Question | null;
+  "user"?: User | null;
+}
+export interface Branch extends std.$Object {
+  "branch_id": number;
+  "title": string;
+}
+export interface Question extends std.$Object {
+  "answers": Answer[];
+  "level": number;
+  "locale": string;
+  "question_id": number;
+  "status": number;
+  "title2": string;
+  "title": string;
+}
+export interface User extends std.$Object {
+  "password": UserPassword;
+  "created_at": Date;
+  "email": string;
+  "onboarded"?: boolean | null;
+  "updated_at"?: Date | null;
+  "profile": UserProfile;
+}
+export interface UserPassword extends std.$Object {
+  "hash": string;
+}
+export interface UserProfile extends std.$Object {
+  "first_name"?: string | null;
+  "last_name"?: string | null;
+  "name"?: string | null;
 }
 export namespace schema {
   export type AccessKind = "Select" | "UpdateRead" | "UpdateWrite" | "Delete" | "Insert";
@@ -84,8 +134,8 @@ export namespace schema {
   }
   export type AccessPolicyAction = "Allow" | "Deny";
   export interface Alias extends AnnotationSubject {
-    "type": Type;
     "expr": string;
+    "type": Type;
   }
   export interface Annotation extends InheritingObject, AnnotationSubject {
     "inheritable"?: boolean | null;
@@ -121,7 +171,6 @@ export namespace schema {
     "constraints": Constraint[];
   }
   export interface Constraint extends CallableObject, InheritingObject {
-    "subject"?: ConsistencySubject | null;
     "params": Parameter[];
     "expr"?: string | null;
     "subjectexpr"?: string | null;
@@ -129,6 +178,7 @@ export namespace schema {
     "errmessage"?: string | null;
     "delegated"?: boolean | null;
     "except_expr"?: string | null;
+    "subject"?: ConsistencySubject | null;
   }
   export interface Delta extends $Object {
     "parents": Delta[];
@@ -137,10 +187,10 @@ export namespace schema {
     "package": sys.ExtensionPackage;
   }
   export interface Function extends CallableObject, VolatilitySubject {
-    "used_globals": Global[];
+    "preserves_optionality"?: boolean | null;
     "body"?: string | null;
     "language": string;
-    "preserves_optionality"?: boolean | null;
+    "used_globals": Global[];
   }
   export interface FutureBehavior extends $Object {}
   export interface Global extends AnnotationSubject {
@@ -151,24 +201,24 @@ export namespace schema {
     "default"?: string | null;
   }
   export interface Index extends InheritingObject, AnnotationSubject {
-    "params": Parameter[];
     "expr"?: string | null;
     "except_expr"?: string | null;
+    "params": Parameter[];
     "kwargs"?: {name: string, expr: string}[] | null;
   }
   export interface Pointer extends InheritingObject, ConsistencySubject, AnnotationSubject {
-    "source"?: Source | null;
-    "target"?: Type | null;
-    "rewrites": Rewrite[];
     "cardinality"?: Cardinality | null;
     "required"?: boolean | null;
     "readonly"?: boolean | null;
     "default"?: string | null;
     "expr"?: string | null;
+    "source"?: Source | null;
+    "target"?: Type | null;
+    "rewrites": Rewrite[];
   }
   export interface Source extends $Object {
-    "pointers": Pointer[];
     "indexes": Index[];
+    "pointers": Pointer[];
   }
   export interface Link extends Pointer, Source {
     "target"?: ObjectType | null;
@@ -178,8 +228,8 @@ export namespace schema {
   }
   export interface Migration extends AnnotationSubject, $Object {
     "parents": Migration[];
-    "message"?: string | null;
     "script": string;
+    "message"?: string | null;
     "generated_by"?: MigrationGeneratedBy | null;
   }
   export type MigrationGeneratedBy = "DevMode" | "DDLStatement";
@@ -187,17 +237,17 @@ export namespace schema {
   export interface ObjectType extends InheritingObject, ConsistencySubject, AnnotationSubject, Type, Source {
     "union_of": ObjectType[];
     "intersection_of": ObjectType[];
-    "properties": Property[];
-    "links": Link[];
     "access_policies": AccessPolicy[];
     "triggers": Trigger[];
     "compound_type": boolean;
     "is_compound_type": boolean;
+    "links": Link[];
+    "properties": Property[];
   }
   export interface Operator extends CallableObject, VolatilitySubject {
     "operator_kind"?: OperatorKind | null;
-    "is_abstract"?: boolean | null;
     "abstract"?: boolean | null;
+    "is_abstract"?: boolean | null;
   }
   export type OperatorKind = "Infix" | "Postfix" | "Prefix" | "Ternary";
   export interface Parameter extends $Object {
@@ -237,8 +287,8 @@ export namespace schema {
   export type TriggerScope = "All" | "Each";
   export type TriggerTiming = "After" | "AfterCommitOf";
   export interface Tuple extends CollectionType {
-    "element_types": TupleElement[];
     "named": boolean;
+    "element_types": TupleElement[];
   }
   export interface TupleElement extends std.BaseObject {
     "type": Type;
@@ -258,11 +308,11 @@ export namespace sys {
     "version": {major: number, minor: number, stage: VersionStage, stage_no: number, local: string[]};
   }
   export interface Role extends SystemObject, schema.InheritingObject, schema.AnnotationSubject {
-    "member_of": Role[];
-    "superuser": boolean;
-    "password"?: string | null;
     "name": string;
+    "superuser": boolean;
     "is_superuser": boolean;
+    "password"?: string | null;
+    "member_of": Role[];
   }
   export type TransactionIsolation = "RepeatableRead" | "Serializable";
   export type VersionStage = "dev" | "alpha" | "beta" | "rc" | "final";
@@ -270,9 +320,9 @@ export namespace sys {
 export interface types {
   "std": {
     "BaseObject": std.BaseObject;
+    "Object": std.$Object;
     "FreeObject": std.FreeObject;
     "JsonEmpty": std.JsonEmpty;
-    "Object": std.$Object;
   };
   "cfg": {
     "ConfigObject": cfg.ConfigObject;
@@ -287,6 +337,17 @@ export interface types {
     "JWT": cfg.JWT;
     "SCRAM": cfg.SCRAM;
     "Trust": cfg.Trust;
+  };
+  "default": {
+    "Admin": Admin;
+    "AdminPassword": AdminPassword;
+    "AdminProfile": AdminProfile;
+    "Answer": Answer;
+    "Branch": Branch;
+    "Question": Question;
+    "User": User;
+    "UserPassword": UserPassword;
+    "UserProfile": UserProfile;
   };
   "schema": {
     "AccessKind": schema.AccessKind;

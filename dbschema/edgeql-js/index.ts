@@ -11,8 +11,8 @@ import _cal from "./modules/cal";
 import _cfg from "./modules/cfg";
 import _schema from "./modules/schema";
 import _sys from "./modules/sys";
-import _math from "./modules/math";
 import _default from "./modules/default";
+import _math from "./modules/math";
 
 const ExportDefault: typeof _std & 
   typeof _default & 
@@ -23,8 +23,8 @@ const ExportDefault: typeof _std &
   "cfg": typeof _cfg;
   "schema": typeof _schema;
   "sys": typeof _sys;
-  "math": typeof _math;
   "default": typeof _default;
+  "math": typeof _math;
 } = {
   ..._std,
   ..._default,
@@ -35,8 +35,8 @@ const ExportDefault: typeof _std &
   "cfg": _cfg,
   "schema": _schema,
   "sys": _sys,
-  "math": _math,
   "default": _default,
+  "math": _math,
 };
 const Cardinality = $.Cardinality;
 type Cardinality = $.Cardinality;

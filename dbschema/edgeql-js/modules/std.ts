@@ -82,8 +82,8 @@ export type $number = $.ScalarType<"std::number", number>;
 const number: $.scalarTypeWithConstructor<$number, string> = $.makeType<$.scalarTypeWithConstructor<$number, string>>(_.spec, "00000000-0000-0000-0000-0000000001ff", _.syntax.literal);
 
 export type $BaseObjectλShape = $.typeutil.flatten<{
-  "__type__": $.LinkDesc<_schema.$ObjectType, $.Cardinality.One, {}, false, false,  true, false>;
   "id": $.PropertyDesc<$uuid, $.Cardinality.One, true, false, true, true>;
+  "__type__": $.LinkDesc<_schema.$ObjectType, $.Cardinality.One, {}, false, false,  true, false>;
 }>;
 type $BaseObject = $.ObjectType<"std::BaseObject", $BaseObjectλShape, null, [
   {id: {__element__: $uuid, __cardinality__: $.Cardinality.One | $.Cardinality.AtMostOne },},
@@ -91,15 +91,6 @@ type $BaseObject = $.ObjectType<"std::BaseObject", $BaseObjectλShape, null, [
 const $BaseObject = $.makeType<$BaseObject>(_.spec, "617d4ffc-bee5-11ed-bab3-b10792eb752f", _.syntax.literal);
 
 const BaseObject: $.$expr_PathNode<$.TypeSet<$BaseObject, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($BaseObject, $.Cardinality.Many), null);
-
-export type $FreeObjectλShape = $.typeutil.flatten<$BaseObjectλShape & {
-}>;
-type $FreeObject = $.ObjectType<"std::FreeObject", $FreeObjectλShape, null, [
-  ...$BaseObject['__exclusives__'],
-]>;
-const $FreeObject = $.makeType<$FreeObject>(_.spec, "6183de6c-bee5-11ed-8a45-8b84e605b337", _.syntax.literal);
-
-const FreeObject: $.$expr_PathNode<$.TypeSet<$FreeObject, $.Cardinality.One>, null> = _.syntax.$PathNode($.$toSet($FreeObject, $.Cardinality.One), null);
 
 export type $Object_6180590ebee511eda417ff62456c3296λShape = $.typeutil.flatten<$BaseObjectλShape & {
 }>;
@@ -110,6 +101,15 @@ export type $Object = $Object_6180590ebee511eda417ff62456c3296
 const $Object_6180590ebee511eda417ff62456c3296 = $.makeType<$Object_6180590ebee511eda417ff62456c3296>(_.spec, "6180590e-bee5-11ed-a417-ff62456c3296", _.syntax.literal);
 
 const Object_6180590ebee511eda417ff62456c3296: $.$expr_PathNode<$.TypeSet<$Object_6180590ebee511eda417ff62456c3296, $.Cardinality.Many>, null> = _.syntax.$PathNode($.$toSet($Object_6180590ebee511eda417ff62456c3296, $.Cardinality.Many), null);
+
+export type $FreeObjectλShape = $.typeutil.flatten<$BaseObjectλShape & {
+}>;
+type $FreeObject = $.ObjectType<"std::FreeObject", $FreeObjectλShape, null, [
+  ...$BaseObject['__exclusives__'],
+]>;
+const $FreeObject = $.makeType<$FreeObject>(_.spec, "6183de6c-bee5-11ed-8a45-8b84e605b337", _.syntax.literal);
+
+const FreeObject: $.$expr_PathNode<$.TypeSet<$FreeObject, $.Cardinality.One>, null> = _.syntax.$PathNode($.$toSet($FreeObject, $.Cardinality.One), null);
 
 type assert_singleλFuncExpr<
   NamedArgs extends {
@@ -4274,7 +4274,7 @@ function sequence_next(...args: any[]) {
 
 
 
-export { JsonEmpty, bigint, bool, bytes, datetime, decimal, duration, float32, float64, int16, int32, int64, json, $sequence, str, uuid, number, $BaseObject, BaseObject, $FreeObject, FreeObject, $Object_6180590ebee511eda417ff62456c3296, Object_6180590ebee511eda417ff62456c3296 };
+export { JsonEmpty, bigint, bool, bytes, datetime, decimal, duration, float32, float64, int16, int32, int64, json, $sequence, str, uuid, number, $BaseObject, BaseObject, $Object_6180590ebee511eda417ff62456c3296, Object_6180590ebee511eda417ff62456c3296, $FreeObject, FreeObject };
 
 export type { $anyscalar, $anypoint, $anydiscrete, $anycontiguous, $anyreal, $anyfloat, $anyint, $anynumeric };
 
@@ -4295,8 +4295,8 @@ type __defaultExports = {
   "str": typeof str;
   "uuid": typeof uuid;
   "BaseObject": typeof BaseObject;
-  "FreeObject": typeof FreeObject;
   "Object": typeof Object_6180590ebee511eda417ff62456c3296;
+  "FreeObject": typeof FreeObject;
   "assert_single": typeof assert_single;
   "assert_exists": typeof assert_exists;
   "assert_distinct": typeof assert_distinct;
@@ -4401,8 +4401,8 @@ const __defaultExports: __defaultExports = {
   "str": str,
   "uuid": uuid,
   "BaseObject": BaseObject,
-  "FreeObject": FreeObject,
   "Object": Object_6180590ebee511eda417ff62456c3296,
+  "FreeObject": FreeObject,
   "assert_single": assert_single,
   "assert_exists": assert_exists,
   "assert_distinct": assert_distinct,
